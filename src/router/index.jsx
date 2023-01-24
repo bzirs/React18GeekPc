@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
 import { Spin } from 'antd'
-const Layout = lazy(_ => import(/* webpackChunkName: "Goods" */ '../pages/Layout'))
-const Login = lazy(_ => import(/* webpackChunkName: "Goods" */ '../pages/Login'))
+const Layout = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Layout'))
+const Login = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Login'))
 
 const routes = [
   {
