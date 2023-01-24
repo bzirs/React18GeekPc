@@ -11,6 +11,6 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    'eslintreact/react-in-jsx-scope': false
+    'react/react-in-jsx-scope': 0
   }
 }
