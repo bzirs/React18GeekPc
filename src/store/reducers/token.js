@@ -7,8 +7,10 @@ const tokenSlice = createSlice({
     refresh_token: ''
   },
   reducers: {
-    setToken: (state, payload) => {
-      console.log(state)
+    setToken: (state, { payload }) => {
+      console.log(payload)
+      state.token = payload.token
+      state.refresh_token = payload.refresh_token
     }
   }
 })
