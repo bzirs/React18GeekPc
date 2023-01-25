@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
 import { Spin } from 'antd'
+import NeedAuth from '@/components/NeedAuth'
 
 const Layout = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Layout'))
 const Login = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Login'))
@@ -11,7 +12,7 @@ const Publish = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Publis
 const routes = [
   {
     path: '/',
-    element: <Layout></Layout>,
+    element: <NeedAuth><Layout></Layout></NeedAuth>,
     children: [
       {
         path: 'home',

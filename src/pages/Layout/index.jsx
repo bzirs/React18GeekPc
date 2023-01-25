@@ -9,7 +9,6 @@ import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { useReqUserInfoQuery } from '@/store/api/user'
 import { useDispatch } from 'react-redux'
 import MyHeader from './components/Header'
-
 const { Content, Sider } = Layout
 
 // 侧边栏
@@ -22,7 +21,6 @@ const siderList = [HomeOutlined, DiffOutlined, EditOutlined].map((t, i) => ({
 const MyLayout = () => {
   // 获取用户信息
   const res = useReqUserInfoQuery()
-  console.log(res)
   const { data: userInfo, isSuccess, error } = res
 
   // 派发器
@@ -46,7 +44,7 @@ const MyLayout = () => {
       dispatch(delToken())
       dispatch(delUserInfo())
       // 跳转
-      navigate('/login')
+      navigate('/')
 
       delete res.error
     }

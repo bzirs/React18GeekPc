@@ -20,7 +20,6 @@ const tokenSlice = createSlice({
     delToken (state, { payload }) {
       state.token = ''
       state.refresh_token = ''
-      console.log(state)
 
       // 删除本地token
       removeStorageToken()
