@@ -4,13 +4,14 @@ import { useSelector } from 'react-redux'
 const { Header } = Layout
 
 const MyHeader = () => {
-  const userInfo = useSelector(({ userInfo }) => userInfo)
-  console.log(userInfo)
+  // 从store中拿出用户信息
+  const { userInfo } = useSelector(({ userInfo }) => userInfo)
+
   return (
     <Header className='header'>
       <div className='logo' />
       <div className='profile'>
-        <span>黑马先锋</span>
+        <span>{userInfo.name}</span>
         <span>
           <LogoutOutlined />
           退出
