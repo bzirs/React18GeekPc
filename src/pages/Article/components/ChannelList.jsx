@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 const ChannelList = () => {
   // 获取频道列表
   const { channels } = useSelector(({ article }) => article)
-  console.log(channels)
 
   const options = channels?.map(t => ({ label: t.name, value: t.id }))
   const handleChange = e => {

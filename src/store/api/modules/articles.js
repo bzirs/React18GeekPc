@@ -14,6 +14,14 @@ const articlesApi = createApi({
       }),
       keepUnusedDataFor: 0
     }),
+    // 获取文章列表
+    reqArticleList: bulid.query({
+      query: params => ({
+        url: '/v1_0/mp/articles',
+        method: 'get',
+        params
+      })
+    }),
     addChannel: bulid.mutation({
       query: body => ({
         url: '/v1_0/mp/articles',
@@ -24,6 +32,6 @@ const articlesApi = createApi({
   })
 })
 
-export const { useReqChannelsListQuery } = articlesApi
+export const { useReqChannelsListQuery, useReqArticleListQuery } = articlesApi
 
 export default articlesApi

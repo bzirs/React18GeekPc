@@ -1,62 +1,26 @@
+import { columns } from '@/constant'
+import { useReqArticleListQuery } from '@/store/api/modules/articles'
+import { setArticleList } from '@/store/reducers/modules/articles'
 import { Table, Card } from 'antd'
-
-const dataSource = [
-  {
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号'
-  },
-  {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号'
-  }
-]
-
-const columns = [
-  {
-    title: '封面',
-    dataIndex: 'name',
-    key: 'name'
-  },
-  {
-    title: '标题',
-    dataIndex: 'age',
-    key: 'age'
-  },
-  {
-    title: '状态',
-    dataIndex: 'address',
-    key: 'address'
-  },
-  {
-    title: '发布时间',
-    dataIndex: 'address'
-  },
-  {
-    title: '阅读数',
-    dataIndex: 'address'
-  },
-  {
-    title: '评论数',
-    dataIndex: 'address'
-  },
-  {
-    title: '点赞数',
-    dataIndex: 'address'
-  },
-  {
-    title: '操作',
-    dataIndex: 'address'
-  }
-]
-
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 const TableList = props => {
+  // 获取文章列表
+  const { data } = useReqArticleListQuery()
+
+  // 读取store文章列表
+  const { articles: dataSource } = useSelector(({ article }) => article)
+
+  // 派发器
+  const dispatch = useDispatch()
+
+  useEffect(_ => {
+    dispatch(setArticleList(data?.data.results))
+  }, [data])
+
   return (
     <Card title='根据筛选条件共查询到xxx条结果:' style={{ marginTop: 10 }}>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table rowKey='id' dataSource={dataSource} columns={columns} />
     </Card>
   )
 }
