@@ -1,5 +1,5 @@
-import loginApi from './login'
-import userApi from './user'
+import loginApi from './modules/login'
+import userApi from './modules/user'
 
 export const apiReducer = {
 

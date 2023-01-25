@@ -1,5 +1,5 @@
-import tokenSlice from './token'
-import userSlice from './user'
+import tokenSlice from './modules/token'
+import userSlice from './modules/user'
 
 export const reducers = {
   token: tokenSlice,
