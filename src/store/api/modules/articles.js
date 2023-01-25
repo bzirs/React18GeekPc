@@ -3,14 +3,14 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import baseQuery from '../baseQuery'
 
-const channelsApi = createApi({
+const articlesApi = createApi({
   reducerPath: 'channelsApi',
   baseQuery,
   endpoints: bulid => ({
+    // 获取频道列表
     reqChannelsList: bulid.query({
-      query: params => ({
-        url: '/v1_0/mp/articles',
-        params
+      query: _ => ({
+        url: '/v1_0/channels'
       }),
       keepUnusedDataFor: 0
     }),
@@ -24,6 +24,6 @@ const channelsApi = createApi({
   })
 })
 
-export const { useReqChannelsListQuery } = channelsApi
+export const { useReqChannelsListQuery } = articlesApi
 
-export default channelsApi
+export default articlesApi

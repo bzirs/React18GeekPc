@@ -1,4 +1,4 @@
-import channelsApi from './modules/channels'
+import channelsApi from './modules/articles'
 import loginApi from './modules/login'
 import userApi from './modules/user'
 

@@ -1,17 +1,25 @@
-import React from 'react'
-import { Card, Breadcrumb, Form, Button, Radio, Select, DatePicker } from 'antd'
+import React, { useEffect } from 'react'
+import { Card, Breadcrumb, Form, Button, Radio, DatePicker } from 'antd'
 import styles from './index.module.scss'
 import { Link } from 'react-router-dom'
-import { useReqChannelsListQuery } from '@/store/api/modules/channels'
+import { useReqChannelsListQuery } from '@/store/api/modules/articles'
+import { useDispatch } from 'react-redux'
+import { setChannels } from '@/store/reducers/modules/articles'
+import ChannelList from './components/ChannelList'
 const { RangePicker } = DatePicker
 
 const Article = () => {
-  const { data, state } = useReqChannelsListQuery()
-  console.log(data, state)
+  // 请求频道列表
+  const { data } = useReqChannelsListQuery()
 
-  const handleChange = e => {
-    console.log(e)
-  }
+  const channels = data?.data?.channels
+
+  // 派发器
+  const dispatch = useDispatch()
+
+  useEffect(_ => {
+    dispatch(setChannels(channels))
+  }, [channels])
 
   return (
     <div className={styles.root}>
@@ -24,6 +32,7 @@ const Article = () => {
             <Breadcrumb.Item>文章列表</Breadcrumb.Item>
           </Breadcrumb>
         }>
+        {/* 筛选 */}
         <Form>
           <Form.Item label='状态'>
             <Radio.Group>
@@ -35,19 +44,7 @@ const Article = () => {
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item label='频道'>
-            <Select
-              defaultValue='lucy'
-              style={{ width: 120 }}
-              onChange={handleChange}
-              options={[
-                { value: 'jack', label: 'Jack' },
-                { value: 'lucy', label: 'Lucy' },
-                { value: 'Yiminghe', label: 'yiminghe' },
-                { value: 'disabled', label: 'Disabled', disabled: true }
-              ]}
-            />
-          </Form.Item>
+          <ChannelList></ChannelList>
 
           <Form.Item label='日期'>
             <RangePicker />
@@ -59,6 +56,8 @@ const Article = () => {
             </Button>
           </Form.Item>
         </Form>
+        {/* 表格 */}
+
       </Card>
     </div>
   )
