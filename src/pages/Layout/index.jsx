@@ -5,6 +5,8 @@ import { Layout, Menu } from 'antd'
 import { HomeOutlined, DiffOutlined, EditOutlined, LogoutOutlined } from '@ant-design/icons'
 import styles from './index.module.scss'
 import { SIDER_LIST } from '@/constant'
+import { Outlet, Link } from 'react-router-dom'
+
 // const { SubMenu } = Menu
 const { Header, Content, Sider } = Layout
 
@@ -12,7 +14,7 @@ const { Header, Content, Sider } = Layout
 const siderList = [HomeOutlined, DiffOutlined, EditOutlined].map((t, i) => ({
   key: SIDER_LIST[i].id,
   icon: React.createElement(t),
-  label: SIDER_LIST[i].label
+  label: <Link to={SIDER_LIST[i].link}>{SIDER_LIST[i].label}</Link>
 }))
 
 const MYLayout = () => {
@@ -34,7 +36,10 @@ const MYLayout = () => {
             <Menu theme='dark' mode='inline' items={siderList} defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}></Menu>
           </Sider>
           <Layout style={{ padding: '24px 24px' }}>
-            <Content className='site-layout-background'>我是内容</Content>
+            <Content className='site-layout-background'>
+              {/* 路由嵌套 二级路由 */}
+              <Outlet></Outlet>
+            </Content>
           </Layout>
         </Layout>
       </Layout>

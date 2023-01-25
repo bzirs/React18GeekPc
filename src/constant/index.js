@@ -1,14 +1,17 @@
 export const SIDER_LIST = [
   {
     id: 1,
-    label: '数据概览'
+    label: '数据概览',
+    link: '/home'
   },
   {
     id: 2,
-    label: '内容管理'
+    label: '内容管理',
+    link: '/home/list'
   },
   {
     id: 3,
-    label: '发布文章'
+    label: '发布文章',
+    link: '/home/publish'
   }
 ]
