@@ -2,9 +2,13 @@ import React from 'react'
 import { Card, Breadcrumb, Form, Button, Radio, Select, DatePicker } from 'antd'
 import styles from './index.module.scss'
 import { Link } from 'react-router-dom'
+import { useReqChannelsListQuery } from '@/store/api/modules/channels'
 const { RangePicker } = DatePicker
 
 const Article = () => {
+  const { data, state } = useReqChannelsListQuery()
+  console.log(data, state)
+
   const handleChange = e => {
     console.log(e)
   }
