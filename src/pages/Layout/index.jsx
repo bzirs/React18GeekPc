@@ -44,7 +44,7 @@ const MyLayout = () => {
       dispatch(delToken())
       dispatch(delUserInfo())
       // 跳转
-      navigate('/')
+      navigate('/login')
 
       delete res.error
     }
