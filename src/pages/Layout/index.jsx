@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Layout, Menu } from 'antd'
 
 // import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons'
-import { HomeOutlined, DiffOutlined, EditOutlined, LogoutOutlined } from '@ant-design/icons'
+import { HomeOutlined, DiffOutlined, EditOutlined } from '@ant-design/icons'
 import styles from './index.module.scss'
 import { SIDER_LIST } from '@/constant'
 import { Outlet, Link } from 'react-router-dom'
+import { useReqUserInfoQuery } from '@/store/api/user'
+import { useDispatch } from 'react-redux'
+import { setUserInfo } from '@/store/reducers/user'
+import MyHeader from './components/Header'
 
 // const { SubMenu } = Menu
-const { Header, Content, Sider } = Layout
+const { Content, Sider } = Layout
 
 // 侧边栏
 const siderList = [HomeOutlined, DiffOutlined, EditOutlined].map((t, i) => ({
@@ -17,20 +21,23 @@ const siderList = [HomeOutlined, DiffOutlined, EditOutlined].map((t, i) => ({
   label: <Link to={SIDER_LIST[i].link}>{SIDER_LIST[i].label}</Link>
 }))
 
-const MYLayout = () => {
+const MyLayout = () => {
+  // 获取用户信息
+  const { data: userInfo, isSuccess } = useReqUserInfoQuery()
+
+  const dispatch = useDispatch()
+
+  useEffect(
+    _ => {
+      isSuccess && dispatch(setUserInfo(userInfo?.data))
+    },
+    [userInfo]
+  )
+
   return (
     <div className={styles.root}>
       <Layout>
-        <Header className='header'>
-          <div className='logo' />
-          <div className='profile'>
-            <span>黑马先锋</span>
-            <span>
-              <LogoutOutlined />
-              退出
-            </span>
-          </div>
-        </Header>
+        <MyHeader></MyHeader>
         <Layout>
           <Sider width={200} className='site-layout-background'>
             <Menu theme='dark' mode='inline' items={siderList} defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}></Menu>
@@ -47,4 +54,4 @@ const MYLayout = () => {
   )
 }
 
-export default MYLayout
+export default MyLayout
