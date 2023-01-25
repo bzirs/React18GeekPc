@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react'
-import { Layout, Menu } from 'antd'
-
-// import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons'
+import { Layout, Menu, message } from 'antd'
+import { delToken } from '@/store/reducers/token'
+import { delUserInfo, setUserInfo } from '@/store/reducers/user'
 import { HomeOutlined, DiffOutlined, EditOutlined } from '@ant-design/icons'
 import styles from './index.module.scss'
 import { SIDER_LIST } from '@/constant'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { useReqUserInfoQuery } from '@/store/api/user'
 import { useDispatch } from 'react-redux'
-import { setUserInfo } from '@/store/reducers/user'
 import MyHeader from './components/Header'
 
-// const { SubMenu } = Menu
 const { Content, Sider } = Layout
 
 // 侧边栏
@@ -23,9 +21,15 @@ const siderList = [HomeOutlined, DiffOutlined, EditOutlined].map((t, i) => ({
 
 const MyLayout = () => {
   // 获取用户信息
-  const { data: userInfo, isSuccess } = useReqUserInfoQuery()
+  const res = useReqUserInfoQuery()
+  console.log(res)
+  const { data: userInfo, isSuccess, error } = res
 
+  // 派发器
   const dispatch = useDispatch()
+
+  // nav跳转
+  const navigate = useNavigate()
 
   useEffect(
     _ => {
@@ -33,6 +37,20 @@ const MyLayout = () => {
     },
     [userInfo]
   )
+
+  useEffect(_ => {
+    if (error?.status === 401) {
+      message.error('身份过期，请重新登录')
+
+      // 删除token 已经用户信息
+      dispatch(delToken())
+      dispatch(delUserInfo())
+      // 跳转
+      navigate('/login')
+
+      delete res.error
+    }
+  }, [error])
 
   return (
     <div className={styles.root}>

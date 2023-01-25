@@ -2,8 +2,8 @@ import { Layout, message, Popconfirm } from 'antd'
 import { LogoutOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { delToken } from '@/store/reducers/token'
-import { useNavigate } from 'react-router-dom'
 import { delUserInfo } from '@/store/reducers/user'
+import { useNavigate } from 'react-router-dom'
 
 const { Header } = Layout
 

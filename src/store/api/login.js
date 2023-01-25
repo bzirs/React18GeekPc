@@ -12,7 +12,8 @@ const loginApi = createApi({
         url: '/v1_0/authorizations',
         method: 'post',
         body
-      })
+      }),
+      keepUnusedDataFor: 0
     })
   })
 })
