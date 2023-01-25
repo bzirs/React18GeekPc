@@ -6,6 +6,7 @@ import { useReqChannelsListQuery } from '@/store/api/modules/articles'
 import { useDispatch } from 'react-redux'
 import { setChannels } from '@/store/reducers/modules/articles'
 import ChannelList from './components/ChannelList'
+import TableList from './components/TableList'
 const { RangePicker } = DatePicker
 
 const Article = () => {
@@ -17,9 +18,12 @@ const Article = () => {
   // 派发器
   const dispatch = useDispatch()
 
-  useEffect(_ => {
-    dispatch(setChannels(channels))
-  }, [channels])
+  useEffect(
+    _ => {
+      dispatch(setChannels(channels))
+    },
+    [channels]
+  )
 
   return (
     <div className={styles.root}>
@@ -57,7 +61,7 @@ const Article = () => {
           </Form.Item>
         </Form>
         {/* 表格 */}
-
+        <TableList></TableList>
       </Card>
     </div>
   )
