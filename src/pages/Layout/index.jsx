@@ -58,7 +58,7 @@ const MyLayout = () => {
           <Sider width={200} className='site-layout-background'>
             <Menu theme='dark' mode='inline' items={siderList} defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}></Menu>
           </Sider>
-          <Layout style={{ padding: '24px 24px', overflow: 'hidden' }}>
+          <Layout style={{ padding: '24px 24px', overflow: 'auto' }}>
             <Content className='site-layout-background'>
               {/* 路由嵌套 二级路由 */}
               <Outlet></Outlet>

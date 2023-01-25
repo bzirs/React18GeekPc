@@ -1,3 +1,7 @@
+import { Image } from 'antd'
+
+import img from '@/assets/error.png'
+
 export const SIDER_LIST = [
   {
     id: 1,
@@ -20,7 +24,17 @@ export const SIDER_LIST = [
 export const columns = [
   {
     title: '封面',
-    dataIndex: 'name'
+    dataIndex: 'name',
+    render (_, { cover }) {
+      console.log(cover)
+      if (cover.type) {
+        // 有图片
+        return <Image width={200} height={150} src={cover.images[0]}></Image>
+      } else {
+        // 无图片
+        return <Image width={200} height={150} src={img}></Image>
+      }
+    }
   },
   {
     title: '标题',
