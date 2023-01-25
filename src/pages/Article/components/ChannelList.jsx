@@ -10,9 +10,9 @@ const ChannelList = () => {
     console.log(e)
   }
   return (
-    <Form.Item label='频道'>
+    <Form.Item label='频道' name='channel_id'>
+      {/* 表单内受控组件select不能设置默认值 defaultValue */}
       <Select
-        defaultValue='请选择频道'
         style={{ width: 120 }}
         onChange={handleChange}
         options={options}
