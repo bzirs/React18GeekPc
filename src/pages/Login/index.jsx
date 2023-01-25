@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useLoginMutation } from '@/store/api/login'
 import { setToken } from '@/store/reducers/token'
 import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const mobileRules = [
   { required: true, message: '请输入手机号' }, // 必须要填
@@ -45,6 +46,15 @@ const Login = () => {
   // 按钮loading状态
   const [loadings, setLoadings] = useState(false)
 
+  // 路由信息
+  const { state } = useLocation()
+
+  // 到哪去
+  const form = state?.pathname || '/'
+
+  // 路由跳转
+  const navigate = useNavigate()
+
   const dispatch = useDispatch()
 
   // rtkq返回函数和一个状态对象
@@ -58,8 +68,8 @@ const Login = () => {
       const {
         data: { data }
       } = await login(e)
+
       dispatch(setToken(data))
-      console.log(data)
     } catch (error) {
       console.dir(error)
     } finally {
@@ -67,7 +77,12 @@ const Login = () => {
 
       messageApi.open({
         type: loginError ? 'error' : 'success',
-        content: loginError ? '登录失败' : '登录成功'
+        content: loginError ? '登录失败' : '登录成功',
+        duration: 1,
+        onClose: _ => {
+          // 跳转路由
+          loginError || navigate(form, { replace: true })
+        }
       })
     }
   }
