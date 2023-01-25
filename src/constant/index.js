@@ -2,7 +2,7 @@ export const SIDER_LIST = [
   {
     id: 1,
     label: '数据概览',
-    link: '/home'
+    link: '/'
   },
   {
     id: 2,

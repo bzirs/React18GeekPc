@@ -8,6 +8,7 @@ const Login = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Login'))
 const Home = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Home'))
 const Article = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Article'))
 const Publish = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/Publish'))
+const Notfound = lazy(_ => import(/* webpackChunkName: "Goods" */ '@/pages/404'))
 
 const routes = [
   {
@@ -15,7 +16,7 @@ const routes = [
     element: <NeedAuth><Layout></Layout></NeedAuth>,
     children: [
       {
-        path: 'home',
+        path: '',
         element: <Home></Home>
       },
       {
@@ -31,6 +32,10 @@ const routes = [
   {
     path: 'login',
     element: <Login></Login>
+  },
+  {
+    path: '*',
+    element: <Notfound></Notfound>
   }
 
 ]
