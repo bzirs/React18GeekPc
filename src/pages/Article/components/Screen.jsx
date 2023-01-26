@@ -24,12 +24,8 @@ const Screen = props => {
 
     params.channel_id = values.channel_id
     if (values.date) {
-      params.begin_pubdate = values.date[0]
-        .startOf('day')
-        .format('YYYY-MM-DD HH:mm:ss')
-      params.end_pubdate = values.date[1]
-        .endOf('day')
-        .format('YYYY-MM-DD HH:mm:ss')
+      params.begin_pubdate = values.date[0].startOf('day').format('YYYY-MM-DD HH:mm:ss')
+      params.end_pubdate = values.date[1].endOf('day').format('YYYY-MM-DD HH:mm:ss')
     }
 
     dispatch(setArticleRqe(params))
@@ -43,7 +39,9 @@ const Screen = props => {
       </Form.Item>
 
       {/* 频道列表 */}
-    <ChannelList></ChannelList>
+      <Form.Item label='频道' name='channel_id'>
+        <ChannelList></ChannelList>
+      </Form.Item>
 
       <Form.Item label='日期' name='date'>
         <RangePicker />

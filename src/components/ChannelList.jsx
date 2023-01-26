@@ -1,19 +1,19 @@
 import { Select } from 'antd'
 import { useSelector } from 'react-redux'
 
-const ChannelList = () => {
+// eslint-disable-next-line react/prop-types
+const ChannelList = ({ value, onChange }) => {
   // 获取频道列表
   const { channels } = useSelector(({ article }) => article)
 
   const options = channels?.map(t => ({ label: t.name, value: t.id }))
-  const handleChange = e => {
-    console.log(e)
-  }
-  //  /* 表单内受控组件select不能设置默认值 defaultValue
+
+  //  如果formitem包裹的情况下 表单内受控组件select不能设置默认值 defaultValue
   return (
-      <Select
+    <Select
+      defaultValue={value}
         style={{ width: 120 }}
-        onChange={handleChange}
+        onChange={onChange}
         options={options}
       />
   )
