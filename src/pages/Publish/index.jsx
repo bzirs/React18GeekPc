@@ -15,13 +15,15 @@ const Publish = props => {
   // 控制type属性
   const [type, setType] = useState(1)
 
+  const formRef = useRef()
+
   // 路由
   const navigate = useNavigate()
 
   // 添加文章
   const [addArticleFn] = useAddChannelMutation()
 
-  const subMit = ({ type, ...rest }) => {
+  const subMit = ({ type, ...rest }, draft = false) => {
     // 说明：如果选择 3 图，图片数量必须是 3 张，否则，后端会当做单图处理
     //      后端根据上传图片数量，来识别是单图或三图
     // eslint-disable-next-line no-use-before-define
@@ -42,7 +44,7 @@ const Publish = props => {
         images
       }
     }
-    addArticleFn(data)
+    addArticleFn(data, draft)
     message.success('文章添加成功', 1, _ => {
       navigate('/home/list')
     })
@@ -62,6 +64,11 @@ const Publish = props => {
     fileRef.current = fileList
   }
 
+  const addDraft = async () => {
+    const values = await formRef.current.validateFields()
+    subMit(values, true)
+  }
+
   return (
     <div className={styles.root}>
       <Card
@@ -73,7 +80,7 @@ const Publish = props => {
             <Breadcrumb.Item>发布文章</Breadcrumb.Item>
           </Breadcrumb>
         }>
-        <Form onFinish={subMit} initialValues={{ type: 1, channel_id: 0 }} labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
+        <Form ref={formRef} onFinish={subMit} initialValues={{ type: 1, channel_id: 0 }} labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
           <Form.Item
             name='title'
             label='标题'
@@ -141,7 +148,7 @@ const Publish = props => {
           <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
             <Space>
               <Button type='primary' htmlType="submit">发布文章</Button>
-              <Button>存入草稿</Button>
+              <Button onClick={addDraft}>存入草稿</Button>
             </Space>
           </Form.Item>
         </Form>

@@ -30,10 +30,13 @@ const articlesApi = createApi({
      * @description 添加文章
      */
     addChannel: bulid.mutation({
-      query: body => ({
+      query: (body, draft = false) => ({
         url: '/v1_0/mp/articles',
         method: 'post',
-        body
+        body,
+        params: {
+          draft
+        }
       })
     }),
 
