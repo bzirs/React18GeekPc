@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './index.module.scss'
 import { Card, Breadcrumb, Form, Input, Button, Space, Radio, Upload, message } from 'antd'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -7,15 +7,20 @@ import ChannelList from '@/components/ChannelList'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { baseUrl } from '@/store/api/baseQuery'
-import { useAddChannelMutation } from '@/store/api/modules/articles'
+import { useAddChannelMutation, useLoadArticleInfoQuery } from '@/store/api/modules/articles'
 
 const Publish = props => {
+  // 获取路径参数
   const { id } = useParams()
-  console.log(id)
+
   // 图片链接列表
   const [fileList, setFileList] = useState([])
+
   // 控制type属性
   const [type, setType] = useState(1)
+
+  // 获取文章详情
+  const { data } = (id && useLoadArticleInfoQuery(id)) || {}
 
   const formRef = useRef()
 
@@ -24,6 +29,27 @@ const Publish = props => {
 
   // 添加文章
   const [addArticleFn] = useAddChannelMutation()
+
+  useEffect(_ => {
+    console.log(id, data)
+    const articleInfo = data?.data
+    if (id && articleInfo) {
+      console.log('文章详情', articleInfo)
+
+      const article = {
+        type: articleInfo?.cover.type, // 图片类型
+        content: articleInfo.content,
+        channel_id: articleInfo.channel_id,
+        title: articleInfo.title
+      }
+      // 设置图片类型 让添加图片部分显示隐藏
+      setType(articleInfo?.cover.type)
+
+      formRef.current.setFieldsValue(article)
+      // 按upload组件的要求对封面进行转换
+      setFileList(articleInfo.cover.images.map((img) => ({ url: img }))) // 显示封面图片
+    }
+  }, [data, id])
 
   const subMit = ({ type, ...rest }, draft = false) => {
     // 说明：如果选择 3 图，图片数量必须是 3 张，否则，后端会当做单图处理

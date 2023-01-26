@@ -51,11 +51,18 @@ const articlesApi = createApi({
         method: 'delete'
       }),
       invalidatesTags: ['articleList'] // 使标签失效
+    }),
+    // 获取文章详情
+    loadArticleInfo: bulid.query({
+      query: target => ({
+        url: `/v1_0/mp/articles/${target}`,
+        method: 'get'
+      })
     })
 
   })
 })
 
-export const { useReqChannelsListQuery, useReqArticleListQuery, useDelArticleMutation, useAddChannelMutation } = articlesApi
+export const { useReqChannelsListQuery, useReqArticleListQuery, useDelArticleMutation, useAddChannelMutation, useLoadArticleInfoQuery } = articlesApi
 
 export default articlesApi
