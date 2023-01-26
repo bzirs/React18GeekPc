@@ -1,29 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Card, Breadcrumb } from 'antd'
 import styles from './index.module.scss'
 import { Link } from 'react-router-dom'
-import { useReqChannelsListQuery } from '@/store/api/modules/articles'
-import { useDispatch } from 'react-redux'
-import { setChannels } from '@/store/reducers/modules/articles'
 import TableList from './components/TableList'
 import Screen from './components/Screen'
 
 const Article = () => {
-  // 请求频道列表
-  const { data } = useReqChannelsListQuery()
-
-  const channels = data?.data?.channels
-
-  // 派发器
-  const dispatch = useDispatch()
-
-  useEffect(
-    _ => {
-      dispatch(setChannels(channels))
-    },
-    [channels]
-  )
-
   return (
     <div className={styles.root}>
       <Card

@@ -2,7 +2,7 @@ import { STATUS } from '@/constant'
 import { setArticleRqe } from '@/store/reducers/modules/articles'
 import { Form, Button, Radio, DatePicker } from 'antd'
 import { useDispatch } from 'react-redux'
-import ChannelList from './ChannelList'
+import ChannelList from '../../../components/ChannelList'
 const { RangePicker } = DatePicker
 
 const Screen = props => {
