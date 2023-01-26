@@ -26,6 +26,10 @@ const routes = [
       {
         path: 'home/publish',
         element: <Publish></Publish>
+      },
+      {
+        path: 'home/publish/:id',
+        element: <Publish></Publish>
       }
     ]
   },

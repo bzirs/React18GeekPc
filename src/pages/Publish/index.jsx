@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import styles from './index.module.scss'
 import { Card, Breadcrumb, Form, Input, Button, Space, Radio, Upload, message } from 'antd'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { PlusOutlined } from '@ant-design/icons'
 import ChannelList from '@/components/ChannelList'
 import ReactQuill from 'react-quill'
@@ -10,6 +10,8 @@ import { baseUrl } from '@/store/api/baseQuery'
 import { useAddChannelMutation } from '@/store/api/modules/articles'
 
 const Publish = props => {
+  const { id } = useParams()
+  console.log(id)
   // 图片链接列表
   const [fileList, setFileList] = useState([])
   // 控制type属性
@@ -69,6 +71,8 @@ const Publish = props => {
     subMit(values, true)
   }
 
+  const flagTitle = id ? '编辑' : '发布'
+
   return (
     <div className={styles.root}>
       <Card
@@ -77,7 +81,7 @@ const Publish = props => {
             <Breadcrumb.Item>
               <Link to='/home'>首页</Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item>发布文章</Breadcrumb.Item>
+            <Breadcrumb.Item>{flagTitle}文章</Breadcrumb.Item>
           </Breadcrumb>
         }>
         <Form ref={formRef} onFinish={subMit} initialValues={{ type: 1, channel_id: 0 }} labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
@@ -147,7 +151,7 @@ const Publish = props => {
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
             <Space>
-              <Button type='primary' htmlType="submit">发布文章</Button>
+              <Button type='primary' htmlType="submit">{flagTitle}文章</Button>
               <Button onClick={addDraft}>存入草稿</Button>
             </Space>
           </Form.Item>

@@ -7,11 +7,13 @@ import img from '@/assets/error.png'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { STATUS } from '@/constant'
 import Popconfirm from 'antd/lib/popconfirm'
+import { useNavigate } from 'react-router-dom'
+
 const TableList = props => {
   // 删除文章接口
-  const [delFn, { isSuccess }] = useDelArticleMutation()
-  console.log(isSuccess)
+  const [delFn] = useDelArticleMutation()
 
+  const navigate = useNavigate()
   // 表格配置
   const columns = [
     {
@@ -60,7 +62,7 @@ const TableList = props => {
       title: '操作',
       render: (_, { id }) => (
       <Space size='middle'>
-        <Button type='primary' shape='circle' icon={<EditOutlined />} />
+        <Button type='primary' shape='circle' onClick={_ => navigate(`/home/publish/${id}`)} icon={<EditOutlined />} />
         <Popconfirm title='确定要删除该文章吗？' onConfirm={_ => confirm(id)} okText='确定' cancelText='取消'>
           <Button danger type='primary' shape='circle' icon={<DeleteOutlined />} />
         </Popconfirm>
