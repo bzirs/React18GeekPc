@@ -5,15 +5,16 @@ import { delUserInfo, setUserInfo } from '@/store/reducers/modules/user'
 import { HomeOutlined, DiffOutlined, EditOutlined } from '@ant-design/icons'
 import styles from './index.module.scss'
 import { SIDER_LIST } from '@/constant'
-import { Outlet, Link, useNavigate } from 'react-router-dom'
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
 import { useReqUserInfoQuery } from '@/store/api/modules/user'
 import { useDispatch } from 'react-redux'
 import MyHeader from './components/Header'
+
 const { Content, Sider } = Layout
 
 // 侧边栏
 const siderList = [HomeOutlined, DiffOutlined, EditOutlined].map((t, i) => ({
-  key: SIDER_LIST[i].id,
+  key: SIDER_LIST[i].link,
   icon: React.createElement(t),
   label: <Link to={SIDER_LIST[i].link}>{SIDER_LIST[i].label}</Link>
 }))
@@ -50,13 +51,18 @@ const MyLayout = () => {
     }
   }, [error])
 
+  let { pathname } = useLocation()
+  if (pathname.startsWith('/home/publish')) {
+    pathname = '/home/publish'
+  }
+
   return (
     <div className={styles.root}>
       <Layout>
         <MyHeader></MyHeader>
         <Layout>
           <Sider width={200} className='site-layout-background'>
-            <Menu theme='dark' mode='inline' items={siderList} defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}></Menu>
+            <Menu theme='dark' mode='inline' items={siderList} selectedKeys={[pathname]} defaultSelectedKeys={['1']} defaultOpenKeys={['']} style={{ height: '100%', borderRight: 0 }}></Menu>
           </Sider>
           <Layout style={{ padding: '24px 24px', overflow: 'auto' }}>
             <Content className='site-layout-background'>
