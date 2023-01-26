@@ -1,4 +1,4 @@
-import { Select, Form } from 'antd'
+import { Select } from 'antd'
 import { useSelector } from 'react-redux'
 
 const ChannelList = () => {
@@ -9,15 +9,13 @@ const ChannelList = () => {
   const handleChange = e => {
     console.log(e)
   }
+  //  /* 表单内受控组件select不能设置默认值 defaultValue
   return (
-    <Form.Item label='频道' name='channel_id'>
-      {/* 表单内受控组件select不能设置默认值 defaultValue */}
       <Select
         style={{ width: 120 }}
         onChange={handleChange}
         options={options}
       />
-    </Form.Item>
   )
 }
 

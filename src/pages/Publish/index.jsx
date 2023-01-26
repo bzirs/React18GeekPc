@@ -10,8 +10,7 @@ import { baseUrl } from '@/store/api/baseQuery'
 
 const Publish = props => {
   // 图片链接列表
-  const [fileList, setFileList] = useState([
-  ])
+  const [fileList, setFileList] = useState([])
   // 控制type属性
   const [type, setType] = useState(1)
 
@@ -41,12 +40,43 @@ const Publish = props => {
           </Breadcrumb>
         }>
         <Form initialValues={{ type: 1, channel_id: 0 }} labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
-          <Form.Item name='title' label='标题'>
+          <Form.Item
+            name='title'
+            label='标题'
+            rules={[
+              {
+                required: true,
+                message: '标题不能为空'
+              }
+            ]}>
             <Input placeholder='请输入文章的标题' style={{ width: 400 }}></Input>
           </Form.Item>
           {/* 频道 */}
-          <ChannelList></ChannelList>
-          <Form.Item name='type' label='封面'>
+          <Form.Item
+            label='频道'
+            name='channel_id'
+            rules={[
+              {
+                required: true,
+                message: '频道不能为空'
+              }
+            ]}>
+            <ChannelList></ChannelList>
+          </Form.Item>
+          <Form.Item
+            name='type'
+            label='封面'
+            rules={[
+              {
+                validator (_, value) {
+                  if (fileList.length !== value) {
+                    return Promise.reject(new Error(`请上传${value}张图片`))
+                  } else {
+                    return Promise.resolve()
+                  }
+                }
+              }
+            ]}>
             <Radio.Group onChange={onTypeChange}>
               <Radio value={1}>单图</Radio>
               <Radio value={3}>三图</Radio>
@@ -63,7 +93,15 @@ const Publish = props => {
               </Upload>
             </Form.Item>
           )}
-          <Form.Item name='content' label='内容'>
+          <Form.Item
+            name='content'
+            label='内容'
+            rules={[
+              {
+                required: true,
+                message: '内容不能为空'
+              }
+            ]}>
             <ReactQuill></ReactQuill>
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
