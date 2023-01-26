@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styles from './index.module.scss'
-import { Card, Breadcrumb, Form, Input, Button, Space, Radio, Upload } from 'antd'
+import { Card, Breadcrumb, Form, Input, Button, Space, Radio, Upload, message } from 'antd'
 import { Link } from 'react-router-dom'
 import { PlusOutlined } from '@ant-design/icons'
 import ChannelList from '@/components/ChannelList'
@@ -13,6 +13,31 @@ const Publish = props => {
   const [fileList, setFileList] = useState([])
   // 控制type属性
   const [type, setType] = useState(1)
+
+  const subMit = values => {
+    // 说明：如果选择 3 图，图片数量必须是 3 张，否则，后端会当做单图处理
+    //      后端根据上传图片数量，来识别是单图或三图
+    // eslint-disable-next-line no-use-before-define
+    if (type === 3 && fileList.length !== 3) return message.warning('封面数量不为3张')
+    const images = fileList.map((item) => {
+      if (item.url) {
+        return item.url
+      } else {
+        return item.response.data.url
+      }
+    })
+
+    const { type: reqType, ...rest } = values
+    const data = {
+      ...rest,
+      // 注意：接口会按照上传图片数量来决定单图 或 三图
+      cover: {
+        type: reqType,
+        images
+      }
+    }
+    console.log('接口需要的数据格式：', data)
+  }
 
   // 存储图片列表
   const fileRef = useRef(fileList)
@@ -39,7 +64,7 @@ const Publish = props => {
             <Breadcrumb.Item>发布文章</Breadcrumb.Item>
           </Breadcrumb>
         }>
-        <Form initialValues={{ type: 1, channel_id: 0 }} labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
+        <Form onFinish={subMit} initialValues={{ type: 1, channel_id: 0 }} labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} size='large'>
           <Form.Item
             name='title'
             label='标题'
@@ -83,7 +108,7 @@ const Publish = props => {
               <Radio value={0}>无图</Radio>
             </Radio.Group>
           </Form.Item>
-          {fileList.length <= type && (
+          {type !== 0 && (
             <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
               {/* action: 上传的地址
                 name: 上传的文件的名字 默认file
@@ -106,7 +131,7 @@ const Publish = props => {
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 4, span: 20 }}>
             <Space>
-              <Button type='primary'>发布文章</Button>
+              <Button type='primary' htmlType="submit">发布文章</Button>
               <Button>存入草稿</Button>
             </Space>
           </Form.Item>
