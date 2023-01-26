@@ -1,5 +1,7 @@
 import { STATUS } from '@/constant'
+import { setArticleRqe } from '@/store/reducers/modules/articles'
 import { Form, Button, Radio, DatePicker } from 'antd'
+import { useDispatch } from 'react-redux'
 import ChannelList from './ChannelList'
 const { RangePicker } = DatePicker
 
@@ -10,6 +12,8 @@ const Screen = props => {
       {t.title}
     </Radio>
   ))
+
+  const dispatch = useDispatch()
 
   // 收集表单数据
   const onFinish = values => {
@@ -28,12 +32,12 @@ const Screen = props => {
         .format('YYYY-MM-DD HH:mm:ss')
     }
 
-    console.log(params)
+    dispatch(setArticleRqe(params))
   }
 
   // const obj = { status: -1, channel_id: 0, date: new Date() }
   return (
-    <Form initialValues={{ status: -1, channel_id: 0, date: [] }} onFinish={onFinish}>
+    <Form initialValues={{ status: -1, channel_id: 0 }} onFinish={onFinish}>
       <Form.Item name='status' label='状态'>
         <Radio.Group>{radioList}</Radio.Group>
       </Form.Item>

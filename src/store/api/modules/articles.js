@@ -20,7 +20,8 @@ const articlesApi = createApi({
         url: '/v1_0/mp/articles',
         method: 'get',
         params
-      })
+      }),
+      keepUnusedDataFor: 0
     }),
     addChannel: bulid.mutation({
       query: body => ({

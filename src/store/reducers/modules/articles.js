@@ -4,7 +4,8 @@ const articlesSlice = createSlice({
   name: 'channelsSlice',
   initialState: _ => ({
     channels: [],
-    articles: []
+    articles: [],
+    params: {}
   }),
   reducers: {
     // 设置频道列表
@@ -18,10 +19,18 @@ const articlesSlice = createSlice({
      */
     setArticleList (state, { payload }) {
       state.articles = payload
+    },
+    /**
+     * @description 修改请求参数
+     * @param {*} state
+     * @param {*} param1
+     */
+    setArticleRqe (state, { payload }) {
+      state.params = payload
     }
   }
 })
 
-export const { setChannels, setArticleList } = articlesSlice.actions
+export const { setChannels, setArticleList, setArticleRqe } = articlesSlice.actions
 
 export default articlesSlice.reducer
