@@ -49,9 +49,10 @@ const articlesApi = createApi({
       }),
       invalidatesTags: ['articleList'] // 使标签失效
     })
+
   })
 })
 
-export const { useReqChannelsListQuery, useReqArticleListQuery, useDelArticleMutation } = articlesApi
+export const { useReqChannelsListQuery, useReqArticleListQuery, useDelArticleMutation, useAddChannelMutation } = articlesApi
 
 export default articlesApi

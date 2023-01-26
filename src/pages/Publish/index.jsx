@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react'
 import styles from './index.module.scss'
 import { Card, Breadcrumb, Form, Input, Button, Space, Radio, Upload, message } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { PlusOutlined } from '@ant-design/icons'
 import ChannelList from '@/components/ChannelList'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { baseUrl } from '@/store/api/baseQuery'
+import { useAddChannelMutation } from '@/store/api/modules/articles'
 
 const Publish = props => {
   // 图片链接列表
@@ -14,7 +15,13 @@ const Publish = props => {
   // 控制type属性
   const [type, setType] = useState(1)
 
-  const subMit = values => {
+  // 路由
+  const navigate = useNavigate()
+
+  // 添加文章
+  const [addArticleFn] = useAddChannelMutation()
+
+  const subMit = ({ type, ...rest }) => {
     // 说明：如果选择 3 图，图片数量必须是 3 张，否则，后端会当做单图处理
     //      后端根据上传图片数量，来识别是单图或三图
     // eslint-disable-next-line no-use-before-define
@@ -27,16 +34,18 @@ const Publish = props => {
       }
     })
 
-    const { type: reqType, ...rest } = values
     const data = {
       ...rest,
       // 注意：接口会按照上传图片数量来决定单图 或 三图
       cover: {
-        type: reqType,
+        type,
         images
       }
     }
-    console.log('接口需要的数据格式：', data)
+    addArticleFn(data)
+    message.success('文章添加成功', 1, _ => {
+      navigate('/home/list')
+    })
   }
 
   // 存储图片列表
