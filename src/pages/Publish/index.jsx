@@ -7,7 +7,7 @@ import ChannelList from '@/components/ChannelList'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { baseUrl } from '@/store/api/baseQuery'
-import { useAddChannelMutation, useLoadArticleInfoQuery } from '@/store/api/modules/articles'
+import { useAddChannelMutation, useEditArticleMutation, useLoadArticleInfoQuery } from '@/store/api/modules/articles'
 
 const Publish = props => {
   // 获取路径参数
@@ -29,6 +29,9 @@ const Publish = props => {
 
   // 添加文章
   const [addArticleFn] = useAddChannelMutation()
+
+  // 编辑文章
+  const [editArticleFn] = useEditArticleMutation()
 
   useEffect(_ => {
     console.log(id, data)
@@ -72,7 +75,8 @@ const Publish = props => {
         images
       }
     }
-    addArticleFn(data, draft)
+    console.log(id)
+    id ? editArticleFn({ body: data, target: id, draft }) : addArticleFn(data, draft)
     message.success('文章添加成功', 1, _ => {
       navigate('/home/list')
     })

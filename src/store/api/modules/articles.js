@@ -1,4 +1,3 @@
-
 import { createApi } from '@reduxjs/toolkit/query/react'
 
 import baseQuery from '../baseQuery'
@@ -58,11 +57,21 @@ const articlesApi = createApi({
         url: `/v1_0/mp/articles/${target}`,
         method: 'get'
       })
+    }),
+    // 编辑文章
+    editArticle: bulid.mutation({
+      query: ({ body, target, draft }) => ({
+        url: `/v1_0/mp/articles/${target}`,
+        method: 'put',
+        body,
+        params: {
+          draft
+        }
+      })
     })
-
   })
 })
 
-export const { useReqChannelsListQuery, useReqArticleListQuery, useDelArticleMutation, useAddChannelMutation, useLoadArticleInfoQuery } = articlesApi
+export const { useReqChannelsListQuery, useReqArticleListQuery, useDelArticleMutation, useAddChannelMutation, useLoadArticleInfoQuery, useEditArticleMutation } = articlesApi
 
 export default articlesApi
